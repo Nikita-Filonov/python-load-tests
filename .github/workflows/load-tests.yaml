@@ -31,18 +31,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Create report directory
-        run: mkdir -p ./reports/${{ github.run_id }}
-
       - name: Run load tests and generate HTML report
-        run: locust --config=${{ github.event.inputs.SCENARIO }} --html=./reports/${{ github.run_id }}/index.html
+        run: locust --config=${{ github.event.inputs.SCENARIO }} --html=index.html
 
       - name: Upload Locust reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: reports
-          path: reports
+          name: report
+          path: index.html
 
   publish-report:
     if: always()
@@ -53,13 +50,13 @@ jobs:
       - name: Download Locust reports
         uses: actions/download-artifact@v4
         with:
-          name: reports
-          path: reports
+          name: report
+          path: public
 
       - name: Deploy HTML report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           keep_files: true
-          publish_dir: reports/${{ github.run_id }}
+          publish_dir: public
           publish_branch: gh-pages
