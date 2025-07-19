@@ -24,7 +24,7 @@ class GetOperationTaskSet(BaseLocustTaskSet):
     def on_start(self) -> None:
         super().on_start()
 
-        self.seed_operation = self.user.environment.get_random_operation()
+        self.seed_operation = self.user.environment.seeds.get_random_operation()
 
     @task(1)
     def get_operations(self):

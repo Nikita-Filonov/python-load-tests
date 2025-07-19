@@ -34,12 +34,14 @@ class BaseClient:
 
 
 def get_http_client(config: HTTPClientConfig) -> Client:
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+
     return Client(timeout=config.timeout, base_url=config.client_url)
 
 
 def get_locust_http_client(config: HTTPClientConfig, environment: Environment) -> Client:
     logging.getLogger("httpx").setLevel(logging.WARNING)
-    
+
     return Client(
         timeout=config.timeout,
         base_url=config.client_url,
