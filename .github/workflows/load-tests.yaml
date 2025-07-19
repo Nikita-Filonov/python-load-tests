@@ -50,16 +50,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-
       - name: Download Locust reports
         uses: actions/download-artifact@v4
         with:
           name: reports
           path: reports
+
+      - name: Print downloaded files for debug
+        run: ls -R reports
 
       - name: Deploy HTML report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
