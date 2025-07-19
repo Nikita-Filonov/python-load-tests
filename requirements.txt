@@ -1,0 +1,5 @@
+Faker==37.4.2
+httpx==0.28.1
+locust==2.37.14
+pydantic==2.11.7
+pydantic-settings==2.10.1
